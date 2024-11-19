@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { useState } from "react";
-import { addToDo } from "@/features/todo/model/todoSlice";
+import { addTask } from "@/features/todo/model/todoSlice";
 
 
 export const TaskList = () => {
@@ -16,7 +16,7 @@ export const TaskList = () => {
       ))}
       <div>
         <input type="text" onChange={(e) => setValue(e.target.value)} value={value} />
-        <button onClick={() => dispatch(addToDo({ title: value, isDone: false, id: Date.now().toString() }))} > +</button>
+        <button onClick={() => dispatch(addTask({ title: value, isDone: false, id: Date.now().toString() }))}>+</button>
       </div>
     </div>
   );
