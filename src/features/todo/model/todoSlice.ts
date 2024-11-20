@@ -1,4 +1,4 @@
-import { Task } from "@/entities/todo/types/task";
+import { Task } from "@/entities/task/types/task";
 import { createSlice } from "@reduxjs/toolkit";
 
 type TodoState = {
@@ -14,7 +14,15 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action: { payload: Task; }) => {
-      state.list.push(action.payload);
+      state.list = [...state.list, action.payload];
+    },
+    toggleIsDoneTask: (state, action: { payload: string; }) => {
+      const copyTodoList = [...state.list];
+      const currentIndex = copyTodoList.findIndex((item) => item.id === action.payload);
+
+      copyTodoList[currentIndex].isDone = !copyTodoList[currentIndex].isDone;
+
+      state.list = copyTodoList;
     },
     deleteTask: (state, action: { payload: string; }) => {
       state.list = state.list.filter((item) => item.id !== action.payload);
@@ -22,5 +30,5 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { addTask, deleteTask } = todoSlice.actions;
+export const { addTask, deleteTask, toggleIsDoneTask } = todoSlice.actions;
 export default todoSlice.reducer;
